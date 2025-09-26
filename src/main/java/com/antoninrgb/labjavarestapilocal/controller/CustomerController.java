@@ -32,12 +32,12 @@ public class CustomerController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Customer>> getAllCustomers(@Valid @RequestBody Customer customer) {
+    public ResponseEntity<List<Customer>> getAllCustomers() {
         return ResponseEntity.ok(customerService.getAll());
     }
 
     @GetMapping("/{email}")
-    public ResponseEntity<Customer> getByEmail(@Valid @RequestBody Customer customer, @PathVariable String email) {
+    public ResponseEntity<Customer> getByEmail(@PathVariable String email) {
         return ResponseEntity.ok(customerService.getByEmail(email));
     }
 
@@ -47,7 +47,7 @@ public class CustomerController {
     }
 
     @DeleteMapping("/{name}")
-    public ResponseEntity<Boolean> deleteCustomer(@Valid @RequestBody Customer customer, @PathVariable String name) {
+    public ResponseEntity<Boolean> deleteCustomer(@PathVariable String name) {
         return ResponseEntity.ok(customerService.deleteCustomer(name));
     }
 }

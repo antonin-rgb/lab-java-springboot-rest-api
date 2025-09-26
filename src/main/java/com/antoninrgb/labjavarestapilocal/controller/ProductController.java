@@ -44,7 +44,7 @@ public class ProductController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Product>> getProduct(@RequestHeader("API-Key") String apiKey, @Valid @RequestBody Product product) {
+    public ResponseEntity<List<Product>> getProduct(@RequestHeader("API-Key") String apiKey) {
         if (!API_KEY.equals(apiKey)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
@@ -52,7 +52,7 @@ public class ProductController {
     }
 
     @GetMapping("/{name}")
-    public ResponseEntity<Product> getByName(@RequestHeader("API-Key") String apiKey, @Valid @RequestBody Product product, @PathVariable String name) {
+    public ResponseEntity<Product> getByName(@RequestHeader("API-Key") String apiKey, @PathVariable String name) {
         if (!API_KEY.equals(apiKey)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
@@ -60,24 +60,23 @@ public class ProductController {
     }
 
 
-
-    @GetMapping("(/{name}/category/{category}")
-    public ResponseEntity<List<Product>> getByCategory(@RequestHeader("API-Key") String apiKey, @Valid @RequestBody Product product, @PathVariable String category) {
+    @GetMapping("/category/{category}")
+    public ResponseEntity<List<Product>> getByCategory(@RequestHeader("API-Key") String apiKey, @PathVariable String category) {
         if (!API_KEY.equals(apiKey)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
         return ResponseEntity.ok(productService.getByCategory(category));
     }
 
-    @GetMapping("({name}/price")
-    public ResponseEntity<List<Product>> getByPriceRange(@RequestHeader("API-Key") String apiKey, @Valid @RequestBody Product product, @RequestParam double min, @RequestParam double max) {
+    @GetMapping("/price")
+    public ResponseEntity<List<Product>> getByPriceRange(@RequestHeader("API-Key") String apiKey, @RequestParam double min, @RequestParam double max) {
         if (!API_KEY.equals(apiKey)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
         return ResponseEntity.ok(productService.getByPriceRange(min, max));
     }
 
-    @PutMapping("(/{name}")
+    @PutMapping("/{name}")
     public ResponseEntity<Product> updateProduct(@RequestHeader("API-Key") String apiKey, @Valid @RequestBody Product product, @PathVariable String name) {
         if (!API_KEY.equals(apiKey)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
@@ -86,7 +85,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/{name}")
-    public ResponseEntity<Boolean> deleteProduct(@RequestHeader("API-Key") String apiKey, @Valid @RequestBody Product product, @PathVariable String name) {
+    public ResponseEntity<Boolean> deleteProduct(@RequestHeader("API-Key") String apiKey, @PathVariable String name) {
         if (!API_KEY.equals(apiKey)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
